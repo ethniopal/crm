@@ -1,0 +1,38 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+:root {
+	--ff-main: 'Montserrat', sans-serif;
+}
+
+html {
+	min-height: 100vh;
+}
+body {
+	font-family: var(--ff-main);
+	overflow-x: hidden;
+	button {
+		font-family: var(--ff-main);
+	}
+}
+
+.outer-spacing {
+	margin: 1rem;
+}
+
+.form-group {
+	padding: 0.5rem 0;
+}
+.flex-between {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+a {
+	text-decoration: none;
+}

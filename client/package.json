@@ -1,0 +1,88 @@
+{
+	"name": "client",
+	"version": "0.1.0",
+	"private": true,
+	"proxy": "http://localhost:5000",
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --env=jsdom",
+		"eject": "react-scripts eject",
+		"install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+		"lint:check": "eslint . --ext=js,jsx;  exit 0",
+		"lint:fix": "eslint . --ext=js,jsx --fix;  exit 0",
+		"build-package-css": "cp src/assets/css/material-dashboard-react.css dist/material-dashboard-react.css",
+		"build-package": "npm run build-package-css && babel src --out-dir dist"
+	},
+	"dependencies": {
+		"@material-ui/core": "4.10.0",
+		"@material-ui/icons": "4.9.1",
+		"@material-ui/lab": "^4.0.0-alpha.57",
+		"@testing-library/jest-dom": "^5.11.6",
+		"@testing-library/react": "^11.2.2",
+		"@testing-library/user-event": "^12.5.0",
+		"axios": "^0.21.1",
+		"chartist": "0.10.1",
+		"classnames": "2.2.6",
+		"downloadjs": "^1.4.7",
+		"file-saver": "^2.0.5",
+		"generate-password": "^1.6.0",
+		"history": "^4.10.1",
+		"jwt-decode": "^3.1.2",
+		"lodash": "^4.17.20",
+		"perfect-scrollbar": "1.5.0",
+		"primeicons": "^4.1.0",
+		"primereact": "^6.2.1",
+		"prop-types": "15.7.2",
+		"react": "^17.0.1",
+		"react-chartist": "0.14.3",
+		"react-csv": "^2.0.3",
+		"react-csv-importer": "^0.3.0",
+		"react-data-grid": "^7.0.0-canary.36",
+		"react-data-grid-addons": "^7.0.0-alpha.24",
+		"react-datepicker": "^3.5.0",
+		"react-datetime-picker": "^3.1.0",
+		"react-dom": "^17.0.1",
+		"react-google-maps": "9.4.5",
+		"react-hook-form": "^6.12.2",
+		"react-redux": "^7.2.2",
+		"react-router-dom": "5.2.0",
+		"react-scripts": "3.4.1",
+		"react-swipeable-views": "0.13.9",
+		"react-widgets": "^5.0.0-beta.22",
+		"redux": "^4.0.5",
+		"redux-thunk": "^2.3.0",
+		"styled-components": "^5.2.1",
+		"uuid": "^8.3.2",
+		"web-vitals": "^0.2.4",
+		"xlsx": "^0.16.9"
+	},
+	"optionalDependencies": {
+		"@types/googlemaps": "3.39.6",
+		"@types/markerclustererplus": "2.1.33",
+		"ajv": "6.12.2",
+		"typescript": "3.9.3"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"dotenv": "^8.2.0",
+		"faker": "^5.2.0"
+	}
+}
