@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Route, Redirect, Switch, useLocation } from 'react-router-dom'
+import axios from 'axios'
 // import { reducer } from './reducers/userReducer'
 // core components
-import Admin from 'layouts/Admin.js'
+import Admin from './layouts/Admin.js'
 import LoginForm from './components/LoginForm/LoginForm'
 import NotFound from './views/Errors/NotFound'
-import axios from 'axios'
 
-import routes from 'routes.js'
+import routes from './routes.js'
 import GlobalStyles from './assets/GlobalStyles'
 
 // const hist = createBrowserHistory()
