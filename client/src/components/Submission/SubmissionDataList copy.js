@@ -111,7 +111,7 @@ const SubmissionDataList = ({ customer, initialRows = 20 }) => {
 
 		const fetchData = async () => {
 			try {
-				const response = await fetch(`${process.env.REACT_APP_API_URL}/api/customer/${id}/submissions`, {
+				const response = await fetch(`/api/customer/${id}/submissions`, {
 					signal: abortController.signal,
 					headers: { Authorization: `Bearer ${token}` }
 				})

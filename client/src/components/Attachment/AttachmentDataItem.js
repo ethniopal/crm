@@ -30,7 +30,7 @@ const AttachmentDataItem = ({ attachment, setAttachments, attachments, handleOpe
 	const handleClickDownload = (e, id, filename) => {
 		const fetchDownload = async (id, filename) => {
 			try {
-				const response = await fetch(`${process.env.REACT_APP_API_URL}/api/attachment/${id}`, {
+				const response = await fetch(`/api/attachment/${id}`, {
 					headers: { Authorization: `Bearer ${token}` }
 				})
 				const blob = await response.blob()
@@ -49,7 +49,7 @@ const AttachmentDataItem = ({ attachment, setAttachments, attachments, handleOpe
 	const handleClickDelete = (e, id) => {
 		const fetchDelete = async id => {
 			try {
-				const response = await fetch(`${process.env.REACT_APP_API_URL}/api/attachment/${id}`, {
+				const response = await fetch(`/api/attachment/${id}`, {
 					method: 'delete',
 					headers: { Authorization: `Bearer ${token}` }
 				})

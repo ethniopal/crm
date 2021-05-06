@@ -64,7 +64,7 @@ const AttachmentForm = ({ customer, setAttachments, attachments, handleClose, ha
 			redirect: 'follow'
 		}
 
-		const url = `${process.env.REACT_APP_API_URL}/api/customer/${customer._id}/upload-single`
+		const url = `/api/customer/${customer._id}/upload-single`
 		const response = await fetch(url, requestOptions)
 		const data = await response.json()
 

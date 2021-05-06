@@ -7,7 +7,6 @@ import ReactDataGrid from 'react-data-grid'
 // import { Draggable } from 'react-data-grid-addons'
 // const DraggableContainer = Draggable.Container
 
-const { REACT_APP_API_URL } = process.env
 const token = localStorage.getItem('jwt')
 const MIN_WIDTH_COLUMN = 160
 
@@ -101,7 +100,7 @@ function DataGrid({ initialRows = 20 }) {
 		const controller = new AbortController()
 		const { signal } = controller
 
-		fetch(`${REACT_APP_API_URL}/api/customer`, {
+		fetch(`/api/customer`, {
 			...signal,
 			headers: { Authorization: `Bearer ${token}` }
 		})

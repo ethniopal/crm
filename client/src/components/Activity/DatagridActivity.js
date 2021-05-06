@@ -45,8 +45,6 @@ const MenuProps = {
 }
 // import { Draggable } from 'react-data-grid-addons'
 // const DraggableContainer = Draggable.Container
-
-const { REACT_APP_API_URL } = process.env
 const token = localStorage.getItem('jwt')
 
 function DataGrid({ ...props }) {
@@ -70,7 +68,7 @@ function DataGrid({ ...props }) {
 	const createActivity = async postData => {
 		const config = {
 			method: 'post',
-			url: `${process.env.REACT_APP_API_URL}/api/customer/${customerId}/activity`,
+			url: `/api/customer/${customerId}/activity`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -94,7 +92,7 @@ function DataGrid({ ...props }) {
 	const updateActivity = async postData => {
 		const config = {
 			method: 'put',
-			url: `${process.env.REACT_APP_API_URL}/api/activity/${activity._id}`,
+			url: `/api/activity/${activity._id}`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -119,7 +117,7 @@ function DataGrid({ ...props }) {
 	const deleteActivity = async () => {
 		const config = {
 			method: 'DELETE',
-			url: `${process.env.REACT_APP_API_URL}/api/activity/${activity._id}`,
+			url: `/api/activity/${activity._id}`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -423,7 +421,7 @@ function DataGrid({ ...props }) {
 		const controller = new AbortController()
 		const { signal } = controller
 
-		fetch(`${process.env.REACT_APP_API_URL}/api/customer/${customerId}/activity`, {
+		fetch(`/api/customer/${customerId}/activity`, {
 			...signal,
 			headers: { Authorization: `Bearer ${token}` }
 		})
@@ -454,7 +452,7 @@ function DataGrid({ ...props }) {
 
 			console.log(query)
 			//met à jour la grid
-			fetch(`${REACT_APP_API_URL}/api/customer/${customerId}/activity?${query}`, {
+			fetch(`/api/customer/${customerId}/activity?${query}`, {
 				...signal,
 				headers: { Authorization: `Bearer ${token}` }
 			})
@@ -468,7 +466,7 @@ function DataGrid({ ...props }) {
 
 			//récupère la liste des utilisateurs
 			if (toggleFilter) {
-				fetch(`${process.env.REACT_APP_API_URL}/api/user/`, {
+				fetch(`/api/user/`, {
 					...signal,
 					headers: { Authorization: `Bearer ${token}` }
 				})

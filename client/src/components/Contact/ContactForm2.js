@@ -77,7 +77,7 @@ const ContactForm = ({ customer, contact, handleClose, handleOpenNotification })
 	const createContactRequest = async postData => {
 		const config = {
 			method: 'post',
-			url: `${process.env.REACT_APP_API_URL}/api/customer/${customer._id}/contact`,
+			url: `/api/customer/${customer._id}/contact`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -100,7 +100,7 @@ const ContactForm = ({ customer, contact, handleClose, handleOpenNotification })
 	const updateContactRequest = async postData => {
 		const config = {
 			method: 'put',
-			url: `${process.env.REACT_APP_API_URL}/api/contact/${contact._id}`,
+			url: `/api/contact/${contact._id}`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'

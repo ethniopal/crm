@@ -11,9 +11,9 @@ const { authController } = require('../controllers/authController')
 const { permission } = require('../constants/user')
 const { ADMIN, COLLABORATOR, SELLER, DISPATCHER, GUESS } = permission
 
-router.get('/', (req, res) => {
+router.get('/what', (req, res) => {
 	// require('../emails/config')
-	res.send('')
+	res.send('tdfkdest')
 })
 
 router.post('/auth/signup', [requireLogin, permit(ADMIN)], authController.signUp)

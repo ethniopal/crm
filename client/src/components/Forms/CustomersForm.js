@@ -134,7 +134,7 @@ const CustomersForm = ({ setCustomer, customer, handleOpenNotification }) => {
 	const createCustomerRequest = async postData => {
 		const config = {
 			method: 'post',
-			url: `${process.env.REACT_APP_API_URL}/api/customer`,
+			url: `/api/customer`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -161,7 +161,7 @@ const CustomersForm = ({ setCustomer, customer, handleOpenNotification }) => {
 	const updateCustomerRequest = async postData => {
 		const config = {
 			method: 'put',
-			url: `${process.env.REACT_APP_API_URL}/api/customer/${customer._id}`,
+			url: `/api/customer/${customer._id}`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'

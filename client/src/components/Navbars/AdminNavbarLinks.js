@@ -48,7 +48,7 @@ export default function AdminNavbarLinks() {
 		const { signal } = controller
 		const token = localStorage.getItem('jwt')
 
-		const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/logout`, {
+		const res = await fetch(`/api/auth/logout`, {
 			...signal,
 			method: 'POST',
 			headers: {

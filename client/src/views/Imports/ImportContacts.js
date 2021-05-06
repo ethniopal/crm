@@ -13,7 +13,7 @@ const ImportCSVContact = () => {
 		const token = localStorage.getItem('jwt')
 
 		try {
-			const response = await fetch(`${process.env.REACT_APP_API_URL}/api/import/contacts`, {
+			const response = await fetch(`/api/import/contacts`, {
 				signal: abortController.signal,
 				headers: {
 					Authorization: `Bearer ${token}`,

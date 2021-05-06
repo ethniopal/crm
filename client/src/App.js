@@ -5,6 +5,7 @@ import { Route, Redirect, Switch, useLocation } from 'react-router-dom'
 import Admin from 'layouts/Admin.js'
 import LoginForm from './components/LoginForm/LoginForm'
 import NotFound from './views/Errors/NotFound'
+import axios from 'axios'
 
 import routes from 'routes.js'
 import GlobalStyles from './assets/GlobalStyles'
@@ -49,9 +50,14 @@ const App = () => {
 	const token = localStorage.getItem('jwt')
 	const controller = new AbortController()
 	const { signal } = controller
+
+	useEffect(() => {
+		axios.get('/api/test').then(response => console.log('proxy working', response))
+	}, [])
+
 	useEffect(() => {
 		try {
-			fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+			fetch(`/api/auth/login`, {
 				...signal,
 				headers: {
 					Authorization: `Bearer ${token}`,

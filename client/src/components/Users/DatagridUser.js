@@ -24,7 +24,6 @@ import UserForm from './FormUser'
 
 const { ADMIN } = userPermission
 
-const { REACT_APP_API_URL } = process.env
 const token = localStorage.getItem('jwt')
 
 const PhoneFormatters = rowData => {
@@ -73,7 +72,7 @@ function DataGrid() {
 		const controller = new AbortController()
 		const { signal } = controller
 
-		const res = await fetch(`${REACT_APP_API_URL}/api/user`, {
+		const res = await fetch(`/api/user`, {
 			method: 'POST',
 			body: JSON.stringify(postData),
 			...signal,
@@ -103,7 +102,7 @@ function DataGrid() {
 		const controller = new AbortController()
 		const { signal } = controller
 
-		const res = await fetch(`${REACT_APP_API_URL}/api/user/${user._id}`, {
+		const res = await fetch(`/api/user/${user._id}`, {
 			method: 'PUT',
 			body: JSON.stringify(postData),
 			...signal,
@@ -139,7 +138,7 @@ function DataGrid() {
 			status: user.status === userStatus.ACTIVE ? userStatus.INACTIVE : userStatus.ACTIVE
 		}
 
-		const res = await fetch(`${REACT_APP_API_URL}/api/user/status/${user._id}`, {
+		const res = await fetch(`/api/user/status/${user._id}`, {
 			method: 'PATCH',
 			body: JSON.stringify(postData),
 			...signal,
@@ -197,7 +196,7 @@ function DataGrid() {
 		const controller = new AbortController()
 		const { signal } = controller
 
-		const res = await fetch(`${REACT_APP_API_URL}/api/user/password/${user._id}`, {
+		const res = await fetch(`/api/user/password/${user._id}`, {
 			method: 'PATCH',
 			body: JSON.stringify(postData),
 			...signal,
@@ -443,7 +442,7 @@ function DataGrid() {
 		const controller = new AbortController()
 		const { signal } = controller
 
-		fetch(`${REACT_APP_API_URL}/api/user`, {
+		fetch(`/api/user`, {
 			...signal,
 			headers: { Authorization: `Bearer ${token}` }
 		})

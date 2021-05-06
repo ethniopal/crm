@@ -47,7 +47,7 @@ const NoteForm = ({ customer, note, notes, setNotes, handleClose, handleOpenNoti
 	const createNoteRequest = async () => {
 		const config = {
 			method: 'post',
-			url: `${process.env.REACT_APP_API_URL}/api/customer/${customer._id}/note`,
+			url: `/api/customer/${customer._id}/note`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ const NoteForm = ({ customer, note, notes, setNotes, handleClose, handleOpenNoti
 	const updateNoteRequest = async () => {
 		const config = {
 			method: 'put',
-			url: `${process.env.REACT_APP_API_URL}/api/notes/${note._id}`,
+			url: `/api/notes/${note._id}`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'

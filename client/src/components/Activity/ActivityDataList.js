@@ -13,7 +13,7 @@ const ActivityDataList = ({ customer, initialRows = 20, handleOpenNotification, 
 	const handleClickDelete = (e, id, companyId) => {
 		const fetchDelete = async id => {
 			try {
-				const response = await fetch(`${process.env.REACT_APP_API_URL}/api/activity/${id}`, {
+				const response = await fetch(`/api/activity/${id}`, {
 					method: 'delete',
 					headers: { Authorization: `Bearer ${token}` }
 				})
@@ -30,7 +30,7 @@ const ActivityDataList = ({ customer, initialRows = 20, handleOpenNotification, 
 		}
 
 		const fetchData = async companyId => {
-			const response = await fetch(`${process.env.REACT_APP_API_URL}/api/customer/${companyId}/activity`, {
+			const response = await fetch(`/api/customer/${companyId}/activity`, {
 				headers: { Authorization: `Bearer ${token}` }
 			})
 			const data = await response.json()

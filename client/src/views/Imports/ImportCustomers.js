@@ -23,7 +23,7 @@ const ImportCSVCustomer = () => {
 		// console.log(JSON.stringify(row))
 
 		try {
-			const response = await fetch(`${process.env.REACT_APP_API_URL}/api/import/customers`, {
+			const response = await fetch(`/api/import/customers`, {
 				signal: abortController.signal,
 				headers: {
 					Authorization: `Bearer ${token}`,

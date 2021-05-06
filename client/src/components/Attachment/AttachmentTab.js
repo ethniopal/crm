@@ -67,7 +67,7 @@ const AttachmentTab = ({ customer, handleOpenNotification, ...props }) => {
 		//récupère les data
 		const fetchData = async () => {
 			try {
-				const response = await fetch(`${process.env.REACT_APP_API_URL}/api/customer/${customerId}/attachment`, {
+				const response = await fetch(`/api/customer/${customerId}/attachment`, {
 					signal: abortController.signal,
 					headers: { Authorization: `Bearer ${token}` }
 				})

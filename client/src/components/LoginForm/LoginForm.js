@@ -14,7 +14,6 @@ import { regexEmail } from '../../variables/regex'
 
 const LoginForm = ({ ...props }) => {
 	// const history = useHistory()
-	const { REACT_APP_API_URL } = process.env
 
 	const [serverError, setServerError] = useState('')
 	const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false)
@@ -42,7 +41,7 @@ const LoginForm = ({ ...props }) => {
 			return
 		}
 		try {
-			let responseAuth = await axios.post(`${REACT_APP_API_URL}/api/auth/signin`, dataForm, {
+			let responseAuth = await axios.post(`/api/auth/signin`, dataForm, {
 				headers: {
 					'Content-Type': 'application/json'
 				}

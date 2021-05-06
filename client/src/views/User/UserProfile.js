@@ -33,7 +33,6 @@ const styles = {
 const useStyles = makeStyles(styles)
 
 export default function UserProfile() {
-	const { REACT_APP_API_URL } = process.env
 	const token = localStorage.getItem('jwt')
 
 	const [user, setUser] = useState(null)
@@ -44,7 +43,7 @@ export default function UserProfile() {
 	const controller = new AbortController()
 	const { signal } = controller
 	const updateUser = async postData => {
-		const res = await fetch(`${REACT_APP_API_URL}/api/user/${user._id}`, {
+		const res = await fetch(`/api/user/${user._id}`, {
 			method: 'PUT',
 			body: JSON.stringify(postData),
 			...signal,
@@ -66,7 +65,7 @@ export default function UserProfile() {
 	}
 
 	const updatePassword = async postData => {
-		const res = await fetch(`${REACT_APP_API_URL}/api/user/password/${user._id}`, {
+		const res = await fetch(`/api/user/password/${user._id}`, {
 			method: 'PATCH',
 			body: JSON.stringify(postData),
 			...signal,
@@ -91,7 +90,7 @@ export default function UserProfile() {
 	}
 
 	useEffect(() => {
-		fetch(`${REACT_APP_API_URL}/api/profile`, {
+		fetch(`/api/profile`, {
 			...signal,
 			headers: { Authorization: `Bearer ${token}` }
 		})

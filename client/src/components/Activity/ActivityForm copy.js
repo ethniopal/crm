@@ -110,7 +110,7 @@ const ActivityForm = ({ customer, activity, handleClose, handleOpenNotification 
 	const createActivityRequest = async postData => {
 		const config = {
 			method: 'post',
-			url: `${process.env.REACT_APP_API_URL}/api/customer/${customer._id}/activity`,
+			url: `/api/customer/${customer._id}/activity`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -133,7 +133,7 @@ const ActivityForm = ({ customer, activity, handleClose, handleOpenNotification 
 	const updateActivityRequest = async postData => {
 		const config = {
 			method: 'put',
-			url: `${process.env.REACT_APP_API_URL}/api/activity/${activity._id}`,
+			url: `/api/activity/${activity._id}`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'

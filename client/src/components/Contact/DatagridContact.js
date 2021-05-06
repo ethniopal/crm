@@ -52,7 +52,7 @@ function DataGrid({ ...props }) {
 	const createContact = async postData => {
 		const config = {
 			method: 'post',
-			url: `${process.env.REACT_APP_API_URL}/api/customer/${customerId}/contact`,
+			url: `/api/customer/${customerId}/contact`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -76,7 +76,7 @@ function DataGrid({ ...props }) {
 	const updateContact = async postData => {
 		const config = {
 			method: 'put',
-			url: `${process.env.REACT_APP_API_URL}/api/contact/${contact._id}`,
+			url: `/api/contact/${contact._id}`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -100,7 +100,7 @@ function DataGrid({ ...props }) {
 	const deleteContact = async () => {
 		const config = {
 			method: 'DELETE',
-			url: `${process.env.REACT_APP_API_URL}/api/contact/${contact._id}`,
+			url: `/api/contact/${contact._id}`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -269,7 +269,7 @@ function DataGrid({ ...props }) {
 		//récupère les data
 		const fetchData = async () => {
 			try {
-				const response = await fetch(`${process.env.REACT_APP_API_URL}/api/customer/${customerId}/contact`, {
+				const response = await fetch(`/api/customer/${customerId}/contact`, {
 					signal: abortController.signal,
 					headers: { Authorization: `Bearer ${token}` }
 				})

@@ -70,7 +70,7 @@ const NoteTab = ({ customer, handleOpenNotification, ...props }) => {
 		const abortController = new AbortController()
 		const fetchData = async () => {
 			try {
-				const response = await fetch(`${process.env.REACT_APP_API_URL}/api/customer/${customerId}/note`, {
+				const response = await fetch(`/api/customer/${customerId}/note`, {
 					signal: abortController.signal,
 					headers: { Authorization: `Bearer ${token}` },
 					method: 'get'
@@ -104,7 +104,7 @@ const NoteTab = ({ customer, handleOpenNotification, ...props }) => {
 		const abortController = new AbortController()
 		const fetchData = async () => {
 			try {
-				const response = await fetch(`${process.env.REACT_APP_API_URL}/api/notes/${noteId}`, {
+				const response = await fetch(`/api/notes/${noteId}`, {
 					signal: abortController.signal,
 					headers: { Authorization: `Bearer ${token}` },
 					method: 'get'

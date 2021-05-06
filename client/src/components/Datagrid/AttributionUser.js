@@ -84,12 +84,11 @@ export default function TransferList({ customer, left, setLeft, right, setRight 
 	}
 
 	useEffect(() => {
-		const { REACT_APP_API_URL } = process.env
 		const token = localStorage.getItem('jwt')
 		const controller = new AbortController()
 		const { signal } = controller
 
-		fetch(`${REACT_APP_API_URL}/api/user`, {
+		fetch(`/api/user`, {
 			...signal,
 			headers: { Authorization: `Bearer ${token}` }
 		})

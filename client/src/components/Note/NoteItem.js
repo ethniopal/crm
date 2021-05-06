@@ -55,7 +55,7 @@ export default function NoteData({ note, notes, setNotes, handleOpenNotification
 	const handleClickDelete = (e, id) => {
 		const fetchDelete = async id => {
 			try {
-				const response = await fetch(`${process.env.REACT_APP_API_URL}/api/notes/${id}`, {
+				const response = await fetch(`/api/notes/${id}`, {
 					method: 'delete',
 					headers: { Authorization: `Bearer ${token}` }
 				})

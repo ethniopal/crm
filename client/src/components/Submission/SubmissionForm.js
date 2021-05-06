@@ -308,10 +308,9 @@ const SubmissionForm = props => {
 
 	//create customed
 	const createRequest = async postData => {
-		console.log(process.env.REACT_APP_API_URL)
 		const config = {
 			method: 'post',
-			url: `${process.env.REACT_APP_API_URL}/api/submission`,
+			url: `/api/submission`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -334,7 +333,7 @@ const SubmissionForm = props => {
 	const updateRequest = async postData => {
 		const config = {
 			method: 'put',
-			url: `${process.env.REACT_APP_API_URL}/api/submission/${submission._id}`,
+			url: `/api/submission/${submission._id}`,
 			headers: {
 				Authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -359,10 +358,9 @@ const SubmissionForm = props => {
 		const controller = new AbortController()
 		const { signal } = controller
 
-		const { REACT_APP_API_URL } = process.env
 		const token = localStorage.getItem('jwt')
 
-		fetch(`${REACT_APP_API_URL}/api/customer`, {
+		fetch(`/api/customer`, {
 			...signal,
 			headers: { Authorization: `Bearer ${token}` }
 		})
@@ -378,11 +376,10 @@ const SubmissionForm = props => {
 		if (idSubmission) {
 			const controller = new AbortController()
 			const { signal } = controller
-
-			const { REACT_APP_API_URL } = process.env
+			
 			const token = localStorage.getItem('jwt')
 
-			fetch(`${REACT_APP_API_URL}/api/submission/${idSubmission}`, {
+			fetch(`/api/submission/${idSubmission}`, {
 				...signal,
 				headers: { Authorization: `Bearer ${token}` }
 			})
@@ -415,10 +412,9 @@ const SubmissionForm = props => {
 			const controller = new AbortController()
 			const { signal } = controller
 
-			const { REACT_APP_API_URL } = process.env
 			const token = localStorage.getItem('jwt')
 
-			fetch(`${REACT_APP_API_URL}/api/customer/${client._id}/contact`, {
+			fetch(`/api/customer/${client._id}/contact`, {
 				...signal,
 				headers: { Authorization: `Bearer ${token}` }
 			})

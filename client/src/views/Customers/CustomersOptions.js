@@ -46,7 +46,7 @@ export default function CustomerPage({ ...props }) {
 		//récupère les data
 		const fetchData = async () => {
 			try {
-				const response = await fetch(`${process.env.REACT_APP_API_URL}/api/customer/${customerId}`, {
+				const response = await fetch(`/api/customer/${customerId}`, {
 					signal: abortController.signal,
 					headers: { Authorization: `Bearer ${token}` }
 				})

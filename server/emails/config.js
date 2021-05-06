@@ -1,9 +1,10 @@
 const sgMail = require('@sendgrid/mail')
-const { SENDGRID_KEY } = require('../keys')
+const keys = require('../keys')
+const { SENDGRID_KEY, FROM_EMAIL } = require('../keys')
 sgMail.setApiKey(SENDGRID_KEY)
 
 const settingEmail = {
-	from: process.env.FROM_EMAIL,
+	from: FROM_EMAIL,
 	signature: `Voici le lien de l'application : ${process.env.APP_URL} 
 	<br><br>Ce courriel est un envoie automatisé, veuillez ne pas y répondre.`
 }

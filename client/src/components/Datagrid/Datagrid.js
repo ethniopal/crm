@@ -23,7 +23,6 @@ const { ADMIN, COLLABORATOR, SELLER, DISPATCHER } = userPermission
 // import { Draggable } from 'react-data-grid-addons'
 // const DraggableContainer = Draggable.Container
 
-const { REACT_APP_API_URL } = process.env
 const token = localStorage.getItem('jwt')
 
 function DataGrid() {
@@ -57,7 +56,7 @@ function DataGrid() {
 			attributions: rightAttribued.map(item => item._id)
 		}
 
-		const res = await fetch(`${REACT_APP_API_URL}/api/customer/${customer._id}/attribution`, {
+		const res = await fetch(`/api/customer/${customer._id}/attribution`, {
 			method: 'PATCH',
 			body: JSON.stringify(postData),
 			...signal,
@@ -85,7 +84,7 @@ function DataGrid() {
 		const controller = new AbortController()
 		const { signal } = controller
 
-		const res = await fetch(`${REACT_APP_API_URL}/api/customer/${customer._id}/`, {
+		const res = await fetch(`/api/customer/${customer._id}/`, {
 			method: 'DELETE',
 			...signal,
 			headers: {
@@ -115,7 +114,7 @@ function DataGrid() {
 			archive: true
 		}
 
-		const res = await fetch(`${REACT_APP_API_URL}/api/customer/${customer._id}`, {
+		const res = await fetch(`/api/customer/${customer._id}`, {
 			method: 'PATCH',
 			body: JSON.stringify(postData),
 			...signal,
@@ -343,7 +342,7 @@ function DataGrid() {
 		const controller = new AbortController()
 		const { signal } = controller
 
-		fetch(`${REACT_APP_API_URL}/api/customer?archive=0`, {
+		fetch(`/api/customer?archive=0`, {
 			...signal,
 			headers: { Authorization: `Bearer ${token}` }
 		})
@@ -369,7 +368,7 @@ function DataGrid() {
 				.join('&')
 			console.log(filter)
 
-			fetch(`${REACT_APP_API_URL}/api/customer?${query}`, {
+			fetch(`/api/customer?${query}`, {
 				...signal,
 				headers: { Authorization: `Bearer ${token}` }
 			})

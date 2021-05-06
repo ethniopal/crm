@@ -61,7 +61,7 @@ const SubmissionTab = ({ customer, handleOpenNotification, ...props }) => {
 		//récupère les data
 		const fetchData = async () => {
 			try {
-				const response = await fetch(`${process.env.REACT_APP_API_URL}/api/submission/${submissionId}`, {
+				const response = await fetch(`/api/submission/${submissionId}`, {
 					signal: abortController.signal,
 					headers: { Authorization: `Bearer ${token}` }
 				})

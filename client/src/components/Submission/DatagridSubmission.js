@@ -19,7 +19,6 @@ const { ADMIN, COLLABORATOR, SELLER, DISPATCHER } = userPermission
 // import { Draggable } from 'react-data-grid-addons'
 // const DraggableContainer = Draggable.Container
 
-const { REACT_APP_API_URL } = process.env
 const token = localStorage.getItem('jwt')
 
 function DataGrid(props) {
@@ -39,7 +38,7 @@ function DataGrid(props) {
 		const controller = new AbortController()
 		const { signal } = controller
 
-		const res = await fetch(`${REACT_APP_API_URL}/api/submission/${submission._id}/`, {
+		const res = await fetch(`/api/submission/${submission._id}/`, {
 			method: 'DELETE',
 			...signal,
 			headers: {
@@ -208,8 +207,8 @@ function DataGrid(props) {
 		let customerId = props?.match?.params?.customerId
 
 		const url = customerId
-			? `${REACT_APP_API_URL}/api/customer/${customerId}/submission?`
-			: `${REACT_APP_API_URL}/api/submission?`
+			? `/api/customer/${customerId}/submission?`
+			: `/api/submission?`
 		fetch(`${url}`, {
 			...signal,
 			headers: { Authorization: `Bearer ${token}` }
@@ -238,8 +237,8 @@ function DataGrid(props) {
 			let customerId = props?.match?.params?.customerId
 
 			const url = customerId
-				? `${REACT_APP_API_URL}/api/customer/${customerId}/submission?`
-				: `${REACT_APP_API_URL}/api/submission?`
+				? `/api/customer/${customerId}/submission?`
+				: `/api/submission?`
 
 			fetch(`${url}${query}`, {
 				...signal,

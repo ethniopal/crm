@@ -5,8 +5,8 @@ const app = express()
 const mongoose = require('mongoose')
 const fileUpload = require('express-fileupload')
 const path = require('path')
-const { MONGOURI } = require('./keys')
-const PORT = 5000
+const { MONGOURI } = require('./server/keys')
+const PORT = process.env.PORT || 5000
 
 require('dotenv').config()
 app.use(helmet())
@@ -40,21 +40,27 @@ mongoose.connection.on('error', err => {
 })
 
 //lists of models
-require('./models/index')
+require('./server/models/index')
 
 app.use(express.json())
 
 //les routes
-const { routes } = require('./routes/index')
+const { routes } = require('./server/routes/index')
 
 for (let route in routes) {
 	app.use('/api', routes[route])
 }
 
-app.use(express.static(path.join(__dirname, 'build')))
+// Run this only in production environment
+if (process.env.NODE_ENV == 'production') {
+  // This to tell express that if it doen't recognize a given file, it should go check it out in the build folder
+  app.use(express.static('client/build'))
 
-app.get('/*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'build', 'index.html'))
-})
+  // return react build version of index.html when express doesn't recognize any of the above routes
+  const path = require('path');
+  app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html' ));
+  })
+}
 
 app.listen(PORT, () => console.log('server is running on ', PORT))
