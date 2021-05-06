@@ -30,8 +30,8 @@ import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 
-import 'assets/css/bootstrap-grid.min.css'
-import 'assets/css/material-dashboard-react.css?v=1.9.0'
+import './assets/css/bootstrap-grid.min.css'
+import './assets/css/material-dashboard-react.css?v=1.9.0'
 
 // var noOp = function () {}
 
