@@ -10,6 +10,11 @@ const settingEmail = {
 }
 
 function sendMail(msg) {
+	msg.from = {
+		email: msg.from,
+		name: 'Sotech Nitram'
+	}
+
 	sgMail
 		.send(msg)
 		.then(response => {

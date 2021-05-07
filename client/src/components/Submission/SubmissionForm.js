@@ -376,7 +376,7 @@ const SubmissionForm = props => {
 		if (idSubmission) {
 			const controller = new AbortController()
 			const { signal } = controller
-			
+
 			const token = localStorage.getItem('jwt')
 
 			fetch(`/api/submission/${idSubmission}`, {
@@ -402,10 +402,6 @@ const SubmissionForm = props => {
 
 		return () => controller.abort()
 	}, [])
-
-	useEffect(() => {
-		setDefaultValues()
-	}, [submission])
 
 	useEffect(() => {
 		if (client) {

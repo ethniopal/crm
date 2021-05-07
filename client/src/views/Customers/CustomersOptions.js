@@ -77,10 +77,10 @@ export default function CustomerPage({ ...props }) {
 
 	//modifie l'url si besoin
 	function handleChangeIndex(event, newValue) {
-		if (newValue !== 0 && customerId) {
-			props.history.push(`/admin/customers/${customerId}/${options[newValue - 1]}`)
+		if (newValue !== 0 && (customerId || customer?._id)) {
+			props.history.push(`/admin/customers/${customerId || customer?._id}/${options[newValue - 1]}`)
 		} else {
-			props.history.push(`/admin/customers/${customerId}`)
+			props.history.push(`/admin/customers/${customerId || customer?._id}`)
 		}
 		setTab(newValue)
 	}
