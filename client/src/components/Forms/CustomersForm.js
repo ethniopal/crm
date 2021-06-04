@@ -22,6 +22,7 @@ import { Alert } from '@material-ui/lab/'
 import { useForm, Controller } from 'react-hook-form'
 import { isEmpty } from 'lodash'
 import { regexEmail, regexUrl } from '../../variables/regex'
+const { trim } = require('lodash')
 
 // import faker from 'faker/locale/fr_CA'
 // faker.locale = 'fr_CA'
@@ -63,11 +64,13 @@ const CustomersForm = ({ setCustomer, customer, handleOpenNotification }) => {
 		companyProvince: customer?.address?.province || '',
 		companyCountry: customer?.address?.country || '',
 		companyZip: customer?.address?.zip || '',
-		personRessource: customer?.mainContact?.name || '',
-		functionRessource: customer?.mainContact?.function || '',
-		emailRessource: customer?.mainContact?.email || '',
-		phoneRessource: customer?.mainContact?.phone?.phone || '',
-		phoneExtRessource: customer?.mainContact?.phone?.ext || ''
+		salemanNumbers: (customer?.salemanNumbers && customer?.salemanNumbers.join(', ')) || ''
+		// personRessource: customer?.mainContact?.name || '',
+		// functionRessource: customer?.mainContact?.function || '',
+		// emailRessource: customer?.mainContact?.email || '',
+		// phoneRessource: customer?.mainContact?.phone?.phone || '',
+		// phoneExtRessource: customer?.mainContact?.phone?.ext || ''
+
 		// cellRessource: customer.mainContact.phone.mobile || ''
 		// status: arrType[Math.floor(Math.random() * arrType.length)],
 		// companyNo: faker.random.number(),
@@ -115,15 +118,16 @@ const CustomersForm = ({ setCustomer, customer, handleOpenNotification }) => {
 		companyProvince: {},
 		companyCountry: {},
 		companyZip: {},
-		personRessource: {},
-		functionRessource: {},
-		emailRessource: {
-			value: regexEmail,
-			message: 'Vous devez avoir un courriel valide'
-		},
-		phoneRessource: {},
-		phoneExtRessource: {},
-		cellRessource: {}
+		salemanNumbers: {}
+		// personRessource: {},
+		// functionRessource: {},
+		// emailRessource: {
+		// 	value: regexEmail,
+		// 	message: 'Vous devez avoir un courriel valide'
+		// },
+		// phoneRessource: {},
+		// phoneExtRessource: {},
+		// cellRessource: {}
 	}
 
 	//form validation
@@ -186,6 +190,7 @@ const CustomersForm = ({ setCustomer, customer, handleOpenNotification }) => {
 	const onSubmit = async data => {
 		setServerError('')
 		const postData = {
+			salemanNumbers: data.salemanNumbers.split(',').map(item => trim(item)),
 			name: data.companyName || '',
 			refNumber: data.companyNo || '',
 			phone: {
@@ -200,16 +205,16 @@ const CustomersForm = ({ setCustomer, customer, handleOpenNotification }) => {
 				zip: data.companyZip || ''
 			},
 
-			mainContact: {
-				name: data.personRessource || '',
-				email: data.emailRessource || '',
-				function: data.functionRessource || '',
-				phone: {
-					phone: data.phoneRessource || '',
-					ext: data.phoneExtRessource || '',
-					mobile: data.cellRessource || ''
-				}
-			},
+			// mainContact: {
+			// 	name: data.personRessource || '',
+			// 	email: data.emailRessource || '',
+			// 	function: data.functionRessource || '',
+			// 	phone: {
+			// 		phone: data.phoneRessource || '',
+			// 		ext: data.phoneExtRessource || '',
+			// 		mobile: data.cellRessource || ''
+			// 	}
+			// },
 			status: data.status || defaultValues.status
 		}
 
@@ -248,6 +253,28 @@ const CustomersForm = ({ setCustomer, customer, handleOpenNotification }) => {
 							)}
 						</div>
 
+						<div className="fieldset">
+							<h1>Accessibilité</h1>
+							<div className="row">
+								<div className="col-md-6">
+									<FormControl style={{ width: '100%' }} className="form-group">
+										<TextField
+											id="salemanNumbers"
+											name="salemanNumbers"
+											label="Code vendeur(s)"
+											type="text"
+											classes={{ root: 'form-group' }}
+											inputProps={{ maxLength: 200 }}
+											helperText={errors.salemanNumbers && errors.salemanNumbers.message}
+											error={Boolean(errors.salemanNumbers)}
+											fullWidth
+											inputRef={register(validations.salemanNumbers)}
+										/>
+										<small>Si plus qu'un séparé par une virgule ","</small>
+									</FormControl>
+								</div>
+							</div>
+						</div>
 						<div className="fieldset">
 							<h1>Informations entreprise</h1>
 							<div className="row">
@@ -350,7 +377,7 @@ const CustomersForm = ({ setCustomer, customer, handleOpenNotification }) => {
 								type="company"
 							/>
 						</div>
-						<div className="fieldset">
+						{/* <div className="fieldset">
 							<h1>Informations sur contact principal</h1>
 
 							<div className="row">
@@ -441,7 +468,7 @@ const CustomersForm = ({ setCustomer, customer, handleOpenNotification }) => {
 									/>
 								</div>
 							</div>
-						</div>
+						</div> */}
 					</CardBody>
 					<CardFooter>
 						<Button type="submit" color="info">

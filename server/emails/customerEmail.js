@@ -12,6 +12,10 @@ customerEmail.newCustomer = (to, data) => {
 		Vous recevez ce courriel car un nouveau client a été ajouté dans le CRM. <br>
 		Voici les informations de celui-ci. À tout moment vous pouvez modifier ces informations.
 
+
+		<h3>Accessibilité</h3>
+		<b>Code Vendeur(s)</b> : ${(data.salemanNumbers && data.salemanNumbers.join(', ')) || ''} <br>
+
 		<h3>Informations Entreprise</h3>
 		<b>Nom</b> : ${data.name || ''} <br>
 		<b>Courriel</b> : ${data.email || ''} <br>
@@ -24,13 +28,6 @@ customerEmail.newCustomer = (to, data) => {
 			<b>Code Postal</b>: ${data.address.zip || ''}<br>
 		<b>Téléphone</b>: ${data.phone.phone || ''} <b>Ext.</b>: ${data.phone.ext || ''}<br>
 		<b>Cellulaire</b>: ${data.phone.cellulaire || ''}<br>
-
-		<h3>Informations contact principal</h3>
-		<b>Nom</b> : ${data.mainContact.name || ''} <br>
-		<b>Courriel</b> : ${data.mainContact.email || ''} <br>
-		<b>Poste</b> : ${data.mainContact.function || ''} <br>
-		<b>Téléphone</b>: ${data.mainContact.phone.phone || ''} <b>Ext.</b>: ${data.mainContact.phone.ext || ''}<br>
-		<b>Cellulaire</b>: ${data.mainContact.phone.cellulaire || ''}<br>
 
 		${settingEmail.signature}`
 	}
@@ -76,6 +73,9 @@ customerEmail.deleteCustomer = (to, data) => {
 		subject: `[CRM] Suppression d'un client`,
 		html: `Bonjour, <br>
 		Vous recevez ce courriel car ce client a été <b>complètement supprimer</b> dans le CRM. <br>
+		
+		<h3>Accessibilité</h3>
+		<b>Code Vendeur(s)</b> : ${(data.salemanNumbers && data.salemanNumbers.join(', ')) || ''} <br>
 
 		<h3>Informations Entreprise</h3>
 		<b>Nom</b> : ${data.name || ''} <br>
@@ -90,12 +90,6 @@ customerEmail.deleteCustomer = (to, data) => {
 		<b>Téléphone</b>: ${data.phone.phone || ''} <b>Ext.</b>: ${data.phone.ext || ''}<br>
 		<b>Cellulaire</b>: ${data.phone.cellulaire || ''}<br>
 
-		<h3>Informations contact principal</h3>
-		<b>Nom</b> : ${data.mainContact.name || ''} <br>
-		<b>Courriel</b> : ${data.mainContact.email || ''} <br>
-		<b>Poste</b> : ${data.mainContact.function || ''} <br>
-		<b>Téléphone</b>: ${data.mainContact.phone.phone || ''} <b>Ext.</b>: ${data.mainContact.phone.ext || ''}<br>
-		<b>Cellulaire</b>: ${data.mainContact.phone.cellulaire || ''}<br>
 		${settingEmail.signature}`
 	}
 	msg.text = striptags(msg.html)

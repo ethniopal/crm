@@ -6,7 +6,7 @@ import DeleteSweepIcon from '@material-ui/icons/DeleteSweep'
 import FilterListIcon from '@material-ui/icons/FilterList'
 
 import { Button } from '@material-ui/core'
-import { FormControl, FormControlLabel, Checkbox } from '@material-ui/core'
+import { FormControl, FormControlLabel, Checkbox, TextField } from '@material-ui/core'
 
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
@@ -319,7 +319,8 @@ function DataGrid() {
 		},
 		{
 			field: 'name',
-			header: 'Companie'
+			header: 'Companie',
+			filterMatchMode: 'contains'
 		},
 		{
 			field: 'phone.phone',
@@ -366,7 +367,7 @@ function DataGrid() {
 			const query = Object.keys(filter)
 				.map(k => esc(k) + '=' + esc(filter[k]))
 				.join('&')
-			console.log(filter)
+			// console.log(query)
 
 			fetch(`/api/customer?${query}`, {
 				...signal,
@@ -391,6 +392,10 @@ function DataGrid() {
 			}
 			return !prev
 		})
+	}
+
+	const handleFilterText = e => {
+		setFilter({ ...filter, [e.target.name]: e.target.value })
 	}
 
 	const handleFilterCheckbox = e => {
@@ -485,24 +490,42 @@ function DataGrid() {
 					</FormControl>
 
 					{haveAccess([ADMIN, COLLABORATOR]) && (
-						<FormControl style={{ width: '100%' }} className="form-group">
-							<FormControlLabel
-								control={
-									<Checkbox
-										checked={filter.myAttribution}
-										onChange={e => {
-											handleFilterCheckbox(e)
-										}}
-										name="myAttribution"
-									/>
-								}
-								label="Mes attributions"
-							/>
-						</FormControl>
+						<>
+							<FormControl style={{ width: '100%' }} className="form-group">
+								<FormControlLabel
+									control={
+										<Checkbox
+											checked={filter.myAttribution}
+											onChange={e => {
+												handleFilterCheckbox(e)
+											}}
+											name="myAttribution"
+										/>
+									}
+									label="Mes attributions"
+								/>
+							</FormControl>
+							<FormControl>
+								<TextField
+									id="salemanNumbers"
+									name="salemanNumbers"
+									label="# Vendeur(s)"
+									type="text"
+									placeholder="Si plusieurs numéros, les séparés par une virgule (,)"
+									classes={{ root: 'form-group' }}
+									inputProps={{ maxLength: 100 }}
+									value={filter.salemanNumbers}
+									onChange={e => {
+										handleFilterText(e)
+									}}
+									fullWidth
+								/>
+							</FormControl>
+						</>
 					)}
 				</div>
 			)}
-			{haveAccess([ADMIN, COLLABORATOR, SELLER, DISPATCHER]) && (
+			{haveAccess([ADMIN, COLLABORATOR]) && (
 				<div>
 					<span>Exporter les {selectedData?.length} résultats filtrés en </span>
 					<Button

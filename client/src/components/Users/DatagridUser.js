@@ -413,6 +413,11 @@ function DataGrid() {
 
 	const defaultColumns = [
 		{
+			field: 'salemanNumber',
+			header: '#Vendeur',
+			filterMatchMode: 'contains'
+		},
+		{
 			field: 'name',
 			header: 'Nom'
 		},

@@ -73,6 +73,10 @@ const contactSchema = new mongoose.Schema(
 			type: ObjectID,
 			ref: 'User'
 		},
+		priorite: {
+			type: String,
+			default: '0'
+		},
 		language: {
 			type: String,
 			default: ''

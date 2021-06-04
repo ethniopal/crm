@@ -10,7 +10,12 @@ const cron = require('node-cron')
 | | | day of month 1 à 31
 | | hour (0 à 23)
 | minute (0 à 59)
-second ( optional : 0 à 59 )*/
-cron.schedule('* * * * *', function () {
+second ( optional : 0 à 59 ) */
+
+// cron.schedule('* * * * *', function () {
+// 	console.log('running a task every minute')
+// })
+
+cron.schedule('* 7 * 1 *', function () {
 	console.log('running a task every minute')
 })

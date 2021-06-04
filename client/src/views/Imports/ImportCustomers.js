@@ -21,7 +21,7 @@ const ImportCSVCustomer = () => {
 
 		row.status = defaultValues.status
 		// console.log(JSON.stringify(row))
-
+		row.salemanNumbers = row.salemanNumbers?.split(',').map(number => number.trim())
 		try {
 			const response = await fetch(`/api/import/customers`, {
 				signal: abortController.signal,
@@ -65,11 +65,11 @@ const ImportCSVCustomer = () => {
 			label: 'Companie',
 			optional: false
 		},
-		{
-			name: 'email',
-			label: 'Email',
-			optional: true
-		},
+		// {
+		// 	name: 'email',
+		// 	label: 'Email',
+		// 	optional: true
+		// },
 		{
 			name: 'phone.phone',
 			label: 'Téléphone',
@@ -123,6 +123,7 @@ const ImportCSVCustomer = () => {
 			optional: true
 		},
 
+		/*
 		{
 			name: 'mainContact.name',
 			label: 'Nom du contact',
@@ -152,6 +153,11 @@ const ImportCSVCustomer = () => {
 		{
 			name: 'mainContact.phone.mobile',
 			label: 'Cellulaire Contact',
+			optional: true
+		},*/
+		{
+			name: 'salemanNumbers',
+			label: 'Code Vendeur',
 			optional: true
 		},
 		{

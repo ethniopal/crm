@@ -63,6 +63,9 @@ const userSchema = new mongoose.Schema(
 		updatedBy: {
 			type: ObjectID,
 			ref: 'User'
+		},
+		salemanNumber: {
+			type: String
 		}
 	},
 	{

@@ -53,14 +53,16 @@ for (let route in routes) {
 
 // Run this only in production environment
 if (process.env.NODE_ENV == 'production') {
-  // This to tell express that if it doen't recognize a given file, it should go check it out in the build folder
-  app.use(express.static('client/build'))
+	// This to tell express that if it doen't recognize a given file, it should go check it out in the build folder
+	app.use(express.static('client/build'))
 
-  // return react build version of index.html when express doesn't recognize any of the above routes
-  const path = require('path');
-  app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html' ));
-  })
+	// return react build version of index.html when express doesn't recognize any of the above routes
+	const path = require('path')
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+	})
 }
+
+require('./server/tasks/index')
 
 app.listen(PORT, () => console.log('server is running on ', PORT))

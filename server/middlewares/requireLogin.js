@@ -20,8 +20,8 @@ const requireLogin = (req, res, next) => {
 				if (!userData) {
 					return res.status(401).json({ success: false, error: "Vous devez être connecté à l'application" })
 				}
-				const { _id, name, email, permission, status } = userData
-				const globalUser = { _id, name, email, permission, status }
+				const { _id, name, email, permission, status, salemanNumber } = userData
+				const globalUser = { _id, name, email, permission, status, salemanNumber }
 
 				if (status !== userMsg.status.ACTIVE) {
 					return res.status(403).json({ success: false, message: 'Votre compte a été désactiver' })

@@ -19,6 +19,7 @@ const { ADMIN } = userPermission
 
 const UserForm = ({ user, handleClose, createUser, updateUser, serverError, setServerError }) => {
 	const [defaultValues] = useState({
+		salemanNumber: user?.salemanNumber || '',
 		name: user?.name || '',
 		cellphone: user?.phone?.mobile || '',
 		phone: user?.phone?.phone || '',
@@ -35,7 +36,6 @@ const UserForm = ({ user, handleClose, createUser, updateUser, serverError, setS
 		zip: user?.address?.zip || ''
 	})
 
-	console.log({ defaultValues }, { user })
 	const [select, setSelect] = useState({
 		permission: user?.permission || userPermission.GUESS,
 		status: user?.status || userStatus.ACTIVE
@@ -43,6 +43,7 @@ const UserForm = ({ user, handleClose, createUser, updateUser, serverError, setS
 
 	//gestion des erreurs
 	const validations = {
+		salemanNumber: {},
 		name: {
 			required: 'Vous devez compléter ce champ'
 		},
@@ -88,6 +89,7 @@ const UserForm = ({ user, handleClose, createUser, updateUser, serverError, setS
 
 		if (select.status && select.permission) {
 			const postData = {
+				salemanNumber: data.salemanNumber || '',
 				name: data.name || '',
 				permission: select.permission || '',
 				status: select.status,
@@ -189,7 +191,23 @@ const UserForm = ({ user, handleClose, createUser, updateUser, serverError, setS
 				<div className="fieldset">
 					<h1>Informations personnelles</h1>
 					<div className="row">
-						<div className="col-md-12">
+						<div className="col-sm-12 col-md-6">
+							<TextField
+								id="salemanNumber"
+								name="salemanNumber"
+								label="# Vendeur"
+								type="text"
+								classes={{ root: 'form-group' }}
+								inputProps={{ maxLength: 100 }}
+								helperText={errors.salemanNumber && errors.salemanNumber.message}
+								error={Boolean(errors.salemanNumber)}
+								fullWidth
+								inputRef={register(validations.salemanNumber)}
+							/>
+						</div>
+					</div>
+					<div className="row">
+						<div className="col-sm-12 col-md-6">
 							<TextField
 								id="name"
 								name="name"

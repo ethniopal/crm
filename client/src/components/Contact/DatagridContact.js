@@ -10,6 +10,8 @@ import { Button } from '@material-ui/core'
 
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
+import { Dropdown } from 'primereact/dropdown'
+
 import { flattenObject } from '../../utils/utils'
 
 import { Toast } from 'primereact/toast'
@@ -41,6 +43,9 @@ function DataGrid({ ...props }) {
 	const [contacts, setContacts] = useState([])
 	const [first, setFirst] = useState(0)
 	const [selectedData, setSelectedData] = useState(null)
+	const [selectedLanguage, setSelectedLanguage] = useState(null)
+	const [selectedPriorite, setSelectedPriorite] = useState(null)
+
 	const [contact, setContact] = useState(null)
 	const [deleteContactDialog, setDeleteContactDialog] = useState(false)
 	const [editContactDialog, setEditContactDialog] = useState(false)
@@ -218,6 +223,83 @@ function DataGrid({ ...props }) {
 		)
 	}
 
+	const onLanguageChange = e => {
+		dt.current.filter(e.value, 'language', 'equals')
+		setSelectedLanguage(e.value)
+	}
+
+	const languageBodyTemplate = rowData => {
+		return (
+			<React.Fragment>
+				{/* <span className="p-column-title">Status</span> */}
+				<span className={`customer-badge language-${rowData.language}`}>
+					{languagesObj[rowData.language] || ''}
+				</span>
+			</React.Fragment>
+		)
+	}
+	const languages = [
+		{ label: 'Français', value: 'F' },
+		{ label: 'English', value: 'E' }
+	]
+	const languagesObj = {}
+
+	languages.forEach(item => {
+		languagesObj[item.value] = item.label
+	})
+
+	const languageFilter = (
+		<Dropdown
+			value={selectedLanguage}
+			optionLabel="label"
+			optionValue="value"
+			options={languages}
+			onChange={onLanguageChange}
+			// itemTemplate={languageItemTemplate}
+			placeholder="Choisir une langue"
+			className="p-column-filter"
+			showClear
+		/>
+	)
+
+	const onPrioriteChange = e => {
+		dt.current.filter(e.value, 'priorite', 'equals')
+		setSelectedPriorite(e.value)
+	}
+
+	const prioriteBodyTemplate = rowData => {
+		return (
+			<React.Fragment>
+				{/* <span className="p-column-title">Status</span> */}
+				<span className={`customer-badge language-${rowData.priorite}`}>
+					{prioritesObj[rowData.priorite] || ''}
+				</span>
+			</React.Fragment>
+		)
+	}
+	const priorites = [
+		{ label: 'Principal', value: '0' },
+		{ label: 'Secondaire', value: '1' }
+	]
+	const prioritesObj = {}
+
+	priorites.forEach(item => {
+		prioritesObj[item.value] = item.label
+	})
+
+	const prioriteFilter = (
+		<Dropdown
+			value={selectedPriorite}
+			optionLabel="label"
+			optionValue="value"
+			options={priorites}
+			onChange={onPrioriteChange}
+			placeholder="Choisir un type"
+			className="p-column-filter"
+			showClear
+		/>
+	)
+
 	const defaultTableProperty = {
 		reorderableColumns: true,
 		sortMode: 'multiple',
@@ -251,6 +333,18 @@ function DataGrid({ ...props }) {
 		{
 			field: 'address.city',
 			header: 'Ville'
+		},
+		{
+			field: 'language',
+			header: 'Langue',
+			body: languageBodyTemplate,
+			filterElement: languageFilter
+		},
+		{
+			field: 'priorite',
+			header: 'Priorité',
+			body: prioriteBodyTemplate,
+			filterElement: prioriteFilter
 		},
 		{
 			field: '',

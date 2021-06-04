@@ -6,6 +6,9 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteSweepIcon from '@material-ui/icons/DeleteSweep'
 import { Add } from '@material-ui/icons'
 import FilterListIcon from '@material-ui/icons/FilterList'
+
+import { Calendar } from 'primereact/calendar';
+
 import {
 	Button,
 	FormControl,
@@ -31,7 +34,7 @@ import { Dialog } from 'primereact/dialog'
 import ActivityForm from './ActivityForm'
 
 import { haveAccess, userPermission } from '../../variables/user.js'
-const { ADMIN, COLLABORATOR } = userPermission
+const { ADMIN, COLLABORATOR, SELLER, DISPATCHER } = userPermission
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -54,7 +57,8 @@ function DataGrid({ ...props }) {
 	const [first, setFirst] = useState(0)
 	const [selectedType, setSelectedType] = useState(null)
 	const [selectedResponse, setSelectedResponse] = useState(null)
-	// const [selectedNegatif, setSelectedNegatif] = useState(null)
+	const [selectedNegatif, setSelectedNegatif] = useState(null)
+	const [selectedDate, setSelectedDate] = useState(null)
 	const [selectedData, setSelectedData] = useState(null)
 	const [activity, setActivity] = useState(null)
 	const [deleteActivityDialog, setDeleteActivityDialog] = useState(false)
@@ -202,7 +206,8 @@ function DataGrid({ ...props }) {
 
 	const types = ['Un appel', 'Un courriel', 'Un rendez-vous', 'Une vidéo-conférence']
 
-	// const negatifs = ['Tous', 'Négatif seulement', 'Positif seulement']
+
+	
 
 	const exportCSV = selectionOnly => {
 		dt.current.exportCSV({ selectionOnly })
@@ -271,10 +276,10 @@ function DataGrid({ ...props }) {
 		setSelectedType(e.value)
 	}
 
-	// const onNegatifChange = e => {
-	// 	dt.current.filter(e.value, 'isNegatif', 'equals')
-	// 	setSelectedNegatif(e.value)
-	// }
+	const onNegatifChange = e => {
+		dt.current.filter(e.value, 'isNegatif', 'equals')
+		setSelectedNegatif(e.value)
+	}
 
 	//FILTER ITEM TEMPLATE
 	const typeItemTemplate = option => {
@@ -319,6 +324,7 @@ function DataGrid({ ...props }) {
 	}
 
 	const isNegatifBodyTemplate = rowData => {
+		
 		return (
 			<>
 				<Checkbox checked={rowData.isNegatif} readOnly inputProps={{ 'aria-label': 'primary checkbox' }} />
@@ -351,6 +357,80 @@ function DataGrid({ ...props }) {
 		/>
 	)
 
+	const negatifChoices = [
+		{ label: 'Négatif', value: true },
+		{ label: 'Positif', value: false }
+	]
+
+	const negatifFilter = (
+		<Dropdown
+			value={selectedNegatif}
+			optionLabel="label"
+			optionValue="value"
+			options={negatifChoices}
+			onChange={onNegatifChange}
+			// itemTemplate={languageItemTemplate}
+			placeholder="Faire un choix"
+			className="p-column-filter"
+			showClear
+		/>
+	)
+
+// filterMatchMode="custom" filterFunction={customFunction}
+
+
+	// const customFunction = (value, filter) => {
+	// 	return value.toUpperCase().indexOf(filter.toUpperCase()) >= 0
+	// }
+	// const dateFilter = (
+	// 	<DatePicker
+	// 		selected={selectedDate}
+	// 		onChange={date => {
+	// 			setSelectedDate(date)
+	// 		}}
+	// 		dateFormat="yyyy/MM/dd"
+	// 		popperPlacement="bottom-start"
+	// 		 />
+	// )
+
+	const formatDateFilter = (date) =>{
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        if (month < 10) {
+            month = '0' + month;
+        }
+
+        if (day < 10) {
+            day = '0' + day;
+        }
+
+        return date.getFullYear() + '-' + month + '-' + day;
+    }
+
+	const filterDate = (value, filter) => {
+        if (filter === undefined || filter === null || (typeof filter === 'string' && filter.trim() === '')) {
+            return true;
+        }
+
+        if (value === undefined || value === null) {
+            return false;
+        }
+
+        return value === formatDateFilter(filter);
+    }
+
+
+
+	const onDateChange = (e) => {
+		// console.log(dt)
+        // dt.filter(e.value, 'date', 'custom');
+        // setSelectedDate( e.value);
+    }
+
+	const dateFilter = <Calendar value={selectedDate} onChange={onDateChange} dateFormat="yyyy/MM/dd" className="p-column-filter" placeholder="Date"/>;
+        
+
 	// const negatifFilter = (
 	// 	<Dropdown
 	// 		value={selectedNegatif}
@@ -362,6 +442,8 @@ function DataGrid({ ...props }) {
 	// 		showClear
 	// 	/>
 	// )
+
+
 
 	const defaultTableProperty = {
 		reorderableColumns: true,
@@ -383,7 +465,9 @@ function DataGrid({ ...props }) {
 		{
 			field: 'date',
 			header: 'Date',
-			body: dateItemTemplate
+			body: dateItemTemplate,
+			// filterElement: dateFilter,
+			// filterFunction:{filterDate} 
 		},
 		{
 			field: 'interactionType',
@@ -400,8 +484,9 @@ function DataGrid({ ...props }) {
 		{
 			field: 'isNegatif',
 			header: 'Retour Négatif?',
-			filter: false,
-			body: isNegatifBodyTemplate
+			filter: true,
+			body: isNegatifBodyTemplate,
+			filterElement: negatifFilter
 		},
 		{
 			field: 'descriptionResponseNegatif',
@@ -555,34 +640,41 @@ function DataGrid({ ...props }) {
 					)}
 				</div>
 			)}
+			<div>
+				{haveAccess([ADMIN]) && (
+					<>
+						<span>Exporter les {selectedData?.length} résultats filtrés en </span>
+						<Button
+							type="button"
+							icon="pi pi-file-o"
+							onClick={() => exportCSV(false)}
+							className="p-mr-2"
+							data-pr-tooltip="CSV"
+						>
+							csv
+						</Button>
+						<span> ou </span>
+						<Button
+							type="button"
+							icon="pi pi-file-excel"
+							onClick={exportExcel}
+							className="p-button-success p-mr-2"
+							data-pr-tooltip="XLS"
+						>
+							excel
+						</Button>
+					</>
+				)}
+				{haveAccess([ADMIN, COLLABORATOR, SELLER, DISPATCHER]) && (
+					<>
+						<Button style={{ float: 'right' }} className="p-button-help" onClick={confirmAddActivityDialog}>
+							<Add /> Ajouter une Activité
+						</Button>
+						<br clear="all" />
+					</>
+				)}
+			</div>
 
-			{haveAccess([ADMIN]) && (
-				<div>
-					<span>Exporter les {selectedData?.length} résultats filtrés en </span>
-					<Button
-						type="button"
-						icon="pi pi-file-o"
-						onClick={() => exportCSV(false)}
-						className="p-mr-2"
-						data-pr-tooltip="CSV"
-					>
-						csv
-					</Button>
-					<span> ou </span>
-					<Button
-						type="button"
-						icon="pi pi-file-excel"
-						onClick={exportExcel}
-						className="p-button-success p-mr-2"
-						data-pr-tooltip="XLS"
-					>
-						excel
-					</Button>
-					<Button className="p-button-help" onClick={confirmAddActivityDialog} style={{ float: 'right' }}>
-						<Add /> Ajouter une Activité
-					</Button>
-				</div>
-			)}
 			<DataTable
 				ref={dt}
 				value={activities}

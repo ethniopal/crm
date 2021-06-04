@@ -19,6 +19,7 @@ const customerSchema = new mongoose.Schema(
 				ref: 'Contact'
 			}
 		],
+		/*
 		mainContact: {
 			name: { type: String },
 			email: { type: String },
@@ -29,7 +30,7 @@ const customerSchema = new mongoose.Schema(
 				mobile: { type: String },
 				fax: { type: String }
 			}
-		},
+		},*/
 		surveys: [
 			{
 				survey: {
@@ -92,6 +93,7 @@ const customerSchema = new mongoose.Schema(
 				ref: 'User'
 			}
 		],
+		salemanNumbers: [String],
 		postedBy: {
 			type: ObjectID,
 			ref: 'User'

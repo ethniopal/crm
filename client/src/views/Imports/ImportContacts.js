@@ -52,12 +52,17 @@ const ImportCSVContact = () => {
 		},
 		{
 			name: 'name',
-			label: 'Nom',
+			label: 'Nom du contact',
 			optional: false
 		},
 		{
 			name: 'email',
 			label: 'Email',
+			optional: true
+		},
+		{
+			name: 'function',
+			label: "Titre d'emploi",
 			optional: true
 		},
 
@@ -111,12 +116,12 @@ const ImportCSVContact = () => {
 			name: 'language',
 			label: 'Langue',
 			optional: true
-		},
-		{
-			name: 'status',
-			label: 'Status',
-			optional: true
 		}
+		// {
+		// 	name: 'status',
+		// 	label: 'Status',
+		// 	optional: true
+		// }
 	]
 	const nextPageUrl = '/admin/customers'
 	return (

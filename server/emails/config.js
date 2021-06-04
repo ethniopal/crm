@@ -2,11 +2,10 @@ const sgMail = require('@sendgrid/mail')
 const keys = require('../keys')
 const { SENDGRID_KEY, FROM_EMAIL } = require('../keys')
 sgMail.setApiKey(SENDGRID_KEY)
-
+const APP_URL = 'https://sotechcrm.herokuapp.com/'
 const settingEmail = {
 	from: FROM_EMAIL,
-	signature: `Voici le lien de l'application : ${process.env.APP_URL} 
-	<br><br>Ce courriel est un envoie automatisé, veuillez ne pas y répondre.`
+	signature: `<br><br>Ce courriel est un envoie automatisé, veuillez ne pas y répondre.`
 }
 
 function sendMail(msg) {

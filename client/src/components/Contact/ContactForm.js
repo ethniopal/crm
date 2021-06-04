@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 
 // core components
-import { TextField } from '@material-ui/core'
+import { TextField, InputLabel, Select, MenuItem, FormHelperText, FormControl } from '@material-ui/core'
 import Button from 'components/CustomButtons/Button.js'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import { Alert } from '@material-ui/lab/'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { regexEmail } from 'variables/regex'
 import { isEmpty } from 'lodash'
 
@@ -27,7 +27,9 @@ const ContactForm = ({ customer, contact, handleClose, createContact, updateCont
 		city: contact?.address?.city || '',
 		province: contact?.address?.province || '',
 		country: contact?.address?.country || '',
-		zip: contact?.address?.zip || ''
+		zip: contact?.address?.zip || '',
+		language: contact?.language || 'F',
+		priorite: contact?.priorite || '0'
 
 		// name: faker.name.findName(),
 		// function: faker.name.jobTitle(),
@@ -63,11 +65,13 @@ const ContactForm = ({ customer, contact, handleClose, createContact, updateCont
 		city: {},
 		province: {},
 		country: {},
-		zip: {}
+		zip: {},
+		language: {},
+		priorite: {}
 	}
 
 	//form validation
-	const { register, handleSubmit, formState, errors } = useForm({ defaultValues, mode: 'onTouched' })
+	const { register, handleSubmit, formState, errors, control } = useForm({ defaultValues, mode: 'onTouched' })
 	const { isSubmitted } = formState
 
 	//gestion du submit
@@ -89,8 +93,11 @@ const ContactForm = ({ customer, contact, handleClose, createContact, updateCont
 				province: data.province || '',
 				country: data.country || '',
 				zip: data.zip || ''
-			}
+			},
+			language: data.language || 'F',
+			priorite: data.priorite || '0'
 		}
+		console.log(postData)
 
 		//save the datas
 		try {
@@ -115,6 +122,64 @@ const ContactForm = ({ customer, contact, handleClose, createContact, updateCont
 						<b dangerouslySetInnerHTML={{ __html: serverError }}></b>
 					</Alert>
 				)}
+
+				<div className="fieldset">
+					<h1>Configuration du contact</h1>
+					<div className="row">
+						<div className="col-md-6">
+							<FormControl style={{ width: '100%' }} className="form-group">
+								<InputLabel id="languageLabel" required>
+									Langue
+								</InputLabel>
+								<Controller
+									as={
+										<Select labelId="languageLabel">
+											<MenuItem value="F">Français</MenuItem>
+											<MenuItem value="E">English</MenuItem>
+										</Select>
+									}
+									name="language"
+									defaultValue={defaultValues.language}
+									control={control}
+									rules={register(validations.language)}
+									error={Boolean(errors.language)}
+								/>
+
+								{errors.language && (
+									<FormHelperText error={Boolean(errors.status)}>
+										{errors.language.message}
+									</FormHelperText>
+								)}
+							</FormControl>
+						</div>
+						<div className="col-md-6">
+							<FormControl style={{ width: '100%' }} className="form-group">
+								<InputLabel id="prioriteLabel" required>
+									Priorité
+								</InputLabel>
+								<Controller
+									as={
+										<Select labelId="prioriteLabel">
+											<MenuItem value="0">Contact Principal</MenuItem>
+											<MenuItem value="1">Contact Secondaire</MenuItem>
+										</Select>
+									}
+									name="priorite"
+									defaultValue={defaultValues.priorite}
+									control={control}
+									rules={register(validations.priorite)}
+									error={Boolean(errors.priorite)}
+								/>
+
+								{errors.priorite && (
+									<FormHelperText error={Boolean(errors.priorite)}>
+										{errors.priorite.message}
+									</FormHelperText>
+								)}
+							</FormControl>
+						</div>
+					</div>
+				</div>
 
 				<div className="fieldset">
 					<h1>Informations personnelles</h1>

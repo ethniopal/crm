@@ -5,6 +5,7 @@ const { downloadResource, getQuery } = require('../utils/utils')
 const { permission, status: statusUser } = require('../constants/user')
 const { customerEmail } = require('../emails/customerEmail')
 const { contactController } = require('./contactController')
+const { trim } = require('lodash')
 const { ADMIN, COLLABORATOR, SELLER, DISPATCHER, GUESS } = permission
 const customerController = {}
 
@@ -16,7 +17,7 @@ const customerController = {}
  * @param {*} res
  */
 customerController.getAllCustomers = async (req, res) => {
-	const [query, limit, order, orderby, offset] = getQuery(req)
+	let [query, limit, order, orderby, offset] = getQuery(req)
 
 	let ejectedCompanyId = []
 	//vérifie les clients sans activités
@@ -27,6 +28,7 @@ customerController.getAllCustomers = async (req, res) => {
 		})
 	}
 
+	//vérifie les clients sans contact
 	if (req.query.noContact === 'true') {
 		const Contact = mongoose.model('Contact')
 		await Contact.distinct('company').then(companies => {
@@ -34,6 +36,7 @@ customerController.getAllCustomers = async (req, res) => {
 		})
 	}
 
+	//vérifie les clients sans soumission
 	if (req.query.noSubmission === 'true') {
 		const Submission = mongoose.model('Submission')
 		await Submission.distinct('company').then(companies => {
@@ -41,6 +44,7 @@ customerController.getAllCustomers = async (req, res) => {
 		})
 	}
 
+	//vérifie les clients sans attribution
 	if (req.query.noAttribution === 'true') {
 		await Customer.find({ attributions: { $exists: true, $not: { $size: 0 } } })
 			.select(['_id', 'name', 'attributions'])
@@ -48,17 +52,57 @@ customerController.getAllCustomers = async (req, res) => {
 				ejectedCompanyId = [...ejectedCompanyId, ...companies]
 			})
 	}
+
 	if (req.query.withAttribution === 'true') {
 		await Customer.find({ attributions: { $not: { $exists: true, $not: { $size: 0 } } } }).then(companies => {
 			ejectedCompanyId = [...ejectedCompanyId, ...companies]
 		})
 	}
 
+	if (req.query.salemanNumbers) {
+		try {
+			// const regex = new RegExp(s, 'i')
+			const salemanNumberCleaned = req.query.salemanNumbers.split(',').map(number => trim(number))
+			await Customer.find({
+				salemanNumbers: {
+					$nin: salemanNumberCleaned
+				}
+			}).then(companies => {
+				ejectedCompanyId = [...ejectedCompanyId, ...companies]
+			})
+		} catch (err) {
+			console.log('error', err)
+		}
+	}
+
+	//Enlève tous les résultats plus haut
 	query._id = { $nin: ejectedCompanyId }
 
+	//retourne seulement les résultats lié à l'utilisateur soit via le numéro de vendeur ou selon une attribution manuel
 	if ([SELLER, DISPATCHER, GUESS].includes(req.user.permission) || req.query.myAttribution === 'true') {
-		query.attributions = { $in: [req.user._id] }
+		query = {
+			$and: [
+				query,
+				{
+					$or: [
+						{
+							salemanNumbers: {
+								$in: [req.user.salemanNumber]
+							}
+						},
+						{
+							attributions: {
+								$in: [req.user._id]
+							}
+						}
+					]
+				}
+			]
+		}
+		// query.attributions = { $in: [req.user._id] }
+		// query.salemanNumbers = { $in: [req.user.salemanNumber] }
 	}
+
 	Customer.find(query)
 		.populate({
 			path: 'postedBy',
@@ -389,8 +433,8 @@ customerController.exportCustomer = async (req, res) => {
 		{
 			label: 'Date of Creation',
 			value: 'createdAt'
-		},
-
+		}
+		/*
 		{
 			label: 'Contact',
 			value: 'mainContact.name'
@@ -414,7 +458,7 @@ customerController.exportCustomer = async (req, res) => {
 		{
 			label: 'Contact Email',
 			value: 'mainContact.email'
-		}
+		} */
 	]
 	let data = {}
 	await Customer.find(query)

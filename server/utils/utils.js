@@ -91,9 +91,30 @@ function getQuery(req) {
 	return [query, limit, order, orderby, offset]
 }
 
+function getFormatDate(d) {
+	const year = d.getFullYear()
+	const month = (d.getMonth() + 1 + '').padStart(2, '0')
+	const day = (d.getDate() + '').padStart(2, '0')
+	return `${year}-${month}-${day}`
+}
+
+//avec les secondes
+function getFormatDateFull(createdAt) {
+	const d = new Date(createdAt)
+	const year = d.getFullYear()
+	const month = (d.getMonth() + 1 + '').padStart(2, '0')
+	const day = (d.getDate() + '').padStart(2, '0')
+	const hour = d.getHours()
+	const minutes = (d.getMinutes() + '').padStart(2, '0')
+
+	return `${year}/${month}/${day} ${hour}:${minutes}`
+}
+
 module.exports = {
 	downloadResource,
 	getQuery,
 	flattenObj,
-	omit
+	omit,
+	getFormatDate,
+	getFormatDateFull
 }
